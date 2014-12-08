@@ -1,0 +1,10 @@
+<h3>KNA Publish Service</h3>
+<form name="pubForm" enctype="multipart/form-data" ng-submit="publishNew()">
+  <p><b>Bangumi</b>: <input type="text" ng-model="templ.bangumi" required /></p>
+  <p><b>Episode</b>: <input type="text" ng-model="templ.episode" required /></p>
+  <p><b>Title</b>: <input type="text" ng-model="templ.title" style="width:600px" required /></p>
+  <p style="float:left;"><b>Intro</b>: </p>
+  <textarea ng-model="templ.intro" style="width:600px; height: 400px; margin-left: 8px" required /></textarea>
+  <p><b>Torrent</b>: <input type="file" fileread="torrent_file" required /></p>
+  <button type="submit">Publish</button>
+</form>

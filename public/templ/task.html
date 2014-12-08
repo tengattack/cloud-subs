@@ -1,0 +1,31 @@
+<h3>New Task</h3>
+<div id="bangumi">
+  <form name="bgmForm" ng-submit="createTask()">
+    Bangumi: <select ng-model="bgmName" ng-options="bangumi for bangumi in bangumis">
+    </select>
+    Episode: <input type="number" ng-model="episode" required />
+    <button type="submit">Create</button>
+  </form>
+</div>
+<hr>
+<h3>Publish Task Only</h3>
+<div id="task">
+  <form name="publishForm">
+    Bangumi: <select ng-model="bgmName" ng-options="bangumi for bangumi in bangumis">
+    </select>
+    Episode: <input type="number" ng-model="episode" required />
+    <a ng-href="#/task/publish?bangumi={{bgmName}}&amp;episode={{episode}}">Go to Publish Page</a>
+  </form>
+</div>
+<hr>
+<h3>Task List</h3>
+<div id="task">
+  <form name="taskForm" ng-submit="viewTask()">
+    Task: <select ng-model="selBangumi" ng-options="bgmName as bgmName for (bgmName, episodes) in ttasks">
+    </select>
+    <select ng-model="selTaskId" ng-options="task_id as (episode | kpad2) for (episode, task_id) in ttasks[selBangumi]">
+    </select>
+    <a ng-href="#/task/view/{{selTaskId}}">View</a>
+    <button ng-click="deleteTask()">Delete</button>
+  </form>
+</div>

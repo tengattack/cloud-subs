@@ -1,0 +1,29 @@
+{
+  "name": "cloud-subs",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node --harmony app"
+  },
+  "dependencies": {
+    "koa": "*",
+    "koa-router": "*",
+    "koa-logger": "*",
+    "koa-route": "*",
+    "koa-session": "*",
+    "koa-session-mongo": "*",
+    "koa-static-cache": "*",
+    "co-body": "*",
+    "co-busboy": "*",
+    "tough-cookie": "*",
+    "validator": "*",
+    "hat": "*",
+    "underscore": "*",
+    "eventproxy": "*",
+    "iconv-lite": "*",
+    "mongoose": "*",
+    "nt": "*",
+    "request": "*",
+    "string": "*",
+    "mkdirp": "*"
+  }
+}

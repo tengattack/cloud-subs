@@ -1,0 +1,8 @@
+{
+  "trim_start": {
+    "type": "string"
+  },
+  "trim_end": {
+    "type": "string"
+  }
+}

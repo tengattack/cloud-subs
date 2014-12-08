@@ -1,0 +1,66 @@
+<h3>Task View</h3>
+<div id="info">
+  <h4>Info</h4>
+  <p>{{task._id ? (task.bangumi + ' ' + (task.episode | kpad2)) : 'Not found'}}</p>
+  <p ng-if="task._id"><b>Status</b>: {{task.status ? task.status : 'new'}}</p>
+  <p ng-if="task.logs"><b>Logs</b>: {{task.logs}}</p>
+</div>
+<hr>
+<div id="detail" ng-show="task._id">
+<div id="time">
+  <h4>Last Updated Time</h4>
+  <p>{{task.updated_at | kdate}}</p>
+  <h4>Created Time</h4>
+  <p>{{task.created_at | kdate}}</p>
+</div>
+<hr>
+<div id="download">
+  <h4>Download Video Source</h4>
+  <form name="dlForm" enctype="multipart/form-data" ng-show="!task.download_id" ng-submit="addDownload()">
+    <input type="radio" ng-model="dlType" value="baidupan" /> Baidu Pan
+    <input type="radio" ng-model="dlType" value="torrent" /> Torrent
+    <input type="radio" ng-model="dlType" value="downloaded" ng-click="getDownload()" /> Downloaded
+    <p ng-show="dlType == 'baidupan'"><b>Baidu pan</b>: <input type="text" ng-model="baidupan_url" ng-required="dlType == 'baidupan'" />  <b>Access code</b>: <input type="text" ng-model="baidupan_code" /></p>
+    <p ng-show="dlType == 'torrent'"><b>Torrent</b>: <input type="file" fileread="torrent_file" ng-required="dlType == 'torrent'" /></p>
+    <p ng-show="dlType == 'downloaded'"><b>Seletct file</b>: <select ng-model="download_id" ng-options="dl._id as dl.filename for dl in downloads" ng-required="dlType == 'downloaded'">
+    </select></p>
+    <button type="submit" ng-show="dlType" ng-disabled="adding || task.download_id">Add</button>
+  </form>
+  <div id="download-status" ng-if="download">
+    <p><b>Status</b>: {{download.status}}</p>
+    <p><b>Filename</b>: {{download.filename}}</p>
+    <p><b>Percentage</b>: {{download.percentage}}</p>
+    <p><b>Speed</b>: {{download.speed}}</p>
+  </div>
+  <button ng-if="task.download_id &amp;&amp; (download.status != 'downloading')" ng-click="task.download_id = undefined;">Redownload</button>
+</div>
+<hr>
+<div id="subtitle">
+  <h4>Subtitle</h4>
+  <form name="stForm" enctype="multipart/form-data" ng-show="!task.subtitle_id" ng-submit="uploadSubtitle()">
+    <p><b>Subtitle</b>: <input type="file" fileread="subtitle_file" required /></p>
+    <button type="submit">Upload</button>
+  </form>
+  <div id="subtitle-info" ng-if="subtitle">
+    <p><b>Filename</b>: {{subtitle.name}}</p>
+    <button ng-show="task.subtitle_id" ng-click="task.subtitle_id = null">Reupload</button>
+  </div>
+</div>
+<hr>
+<div id="encode">
+  <h4>Encode</h4>
+  <p ng-if="task.outfile"><b>Outfile</b>: <a href="/dist/{{task.bangumi}}" target="_blank">{{task.outfile}}</a></p>
+  <p>Publish after finish: <input type="checkbox" ng-model="autopublish" /></p>
+  <p ng-repeat="(opt_name, opt_value) in task.opts"><b>{{opt_name}}</b>: <input type="text" ng-model="task.opts[opt_name]" /></p>
+  <button ng-click="startEncode()" ng-disabled="working">{{task.status == 'encoding' ? 'Encoding' : 'Encode'}}</button>
+</div>
+<hr>
+<div id="publish">
+  <h4>Bt Sites Publish</h4>
+  <p>Publish on DMHY, KTXP and POPGO</p>
+  <div ng-if="task.bt_sites">
+    <p ng-repeat="(site_name, succeed) in task.bt_sites"><b>{{site_name}}</b>: {{succeed}}</p>
+  </div>
+  <button ng-click="publish()" ng-disabled="!task.outfile || working">Publish</button>
+</div>
+</div>

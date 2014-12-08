@@ -1,0 +1,26 @@
+<h3>User Info</h3>
+<div id="user-info">
+  <p><b>Islogin</b>: {{info.islogin}}</p>
+  <div ng-if="info.islogin">
+    <p><b>Nickname</b>: {{info.user.nickname}}</p>
+    <p><b>Username</b>: {{info.user.username}}</p>
+    <p><a href="/api/user/logout">Logout</a></p>
+  </div>
+</div>
+<hr>
+<h3>User Settings</h3>
+<div id="user-settings">
+  <form name="userSettingsForm" ng-submit="saveSettings()">
+    <p>Nickname: <input type="text" ng-model="settings.nickname" required /></p>
+    <p>Email: <input type="text" ng-model="settings.email" /></p>
+    <p>Password: <input type="password" ng-model="settings.password" /></p>
+    <h4>Bt Sites</h4>
+    <p ng-repeat="site in btsites">
+      {{site}}:
+      <input type="text" ng-model="$parent.settings.btsites[site].username" required />
+      <input type="password" ng-model="$parent.settings.btsites[site].password" />
+      <span ng-show="$parent.settings.btsites[site].cookie"><br/><code>Cookie: {{$parent.settings.btsites[site].cookie}}</code></span>
+    </p>
+    <button type="submit">Save</button>
+  </form>
+</div>
