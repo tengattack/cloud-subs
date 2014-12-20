@@ -144,7 +144,7 @@ function btsitesUpload(user_id, task_id, title, intro, torrent_file, callback)
     TaskProxy.updateById(task_id, task, function() {});
   };
 
-  var arr_btsites = ['ktxp', 'dmhy', 'popgo'];
+  var arr_btsites = ['ktxp', 'dmhy', 'popgo', 'bangumi'];
   var ep = new EventProxy();
   var tbuf;
   //it will get from user upload

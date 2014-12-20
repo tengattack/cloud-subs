@@ -203,7 +203,7 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
 
 .controller('UserCtrl', ['$scope', '$routeParams', '$location', 'User',
   function($scope, $routeParams, $location, User) {
-    var btsites = ['dmhy', 'ktxp', 'popgo'];
+    var btsites = ['dmhy', 'ktxp', 'popgo', 'bangumi'];
     $scope.btsites = btsites;
     $scope.info = User.info({btsites: 1}, function (info) {
       if (info.islogin) {

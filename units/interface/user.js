@@ -205,7 +205,7 @@ function *user_route(action) {
       }
       if (body && body.nickname) {
         var user = this.session.user;
-        var btsites = ['dmhy', 'ktxp', 'popgo'];
+        var btsites = ['dmhy', 'ktxp', 'popgo', 'bangumi'];
         var btsites_info = {};
         var user_new_info = {};
         if (body.nickname != user.nickname) {

@@ -109,6 +109,8 @@ exports.post = function (url, form, options, callback) {
     if (options.multipart) {
       multipart = true;
       opts.postambleCRLF = true;
+    } else if (options.json) {
+      opts.form = JSON.stringify(form);
     } else {
       opts.form = form;
     }

@@ -4,7 +4,8 @@ var btsites_config = require('./../../config').bt_sites;
 
 var BTSiteDmhy = require('./dmhy'),
   BTSiteKtxp = require('./ktxp'),
-  BTSitePopgo = require('./popgo');
+  BTSitePopgo = require('./popgo'),
+  BTSiteBangumi = require('./bangumi');
 
 var BTSite = function (site, user_id) {
   var bts = null;
@@ -17,6 +18,9 @@ var BTSite = function (site, user_id) {
       break;
     case 'popgo':
       bts = new BTSitePopgo();
+      break;
+    case 'bangumi':
+      bts = new BTSiteBangumi();
       break;
   }
   if (bts) bts.setUserId(user_id);
