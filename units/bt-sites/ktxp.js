@@ -76,7 +76,8 @@ BTSiteKtxp.prototype.LoginForm = function (form, callback) {
           if (m) {
             message = m[1];
             if (form.node == 1
-                && message.indexOf('极影论坛 没有这个用户') !== -1) {
+                && (message.indexOf('极影论坛 没有这个用户') !== -1
+                  || message.indexOf('登录验证失败') !== -1)) {
               //本地用户
               form.node = 0;
               form.vcode = null;
