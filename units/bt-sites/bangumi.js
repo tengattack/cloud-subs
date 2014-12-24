@@ -201,13 +201,14 @@ BTSiteBangumi.prototype.upload = function (title, intro, torrent_buf, callback) 
 };
 
 BTSiteBangumi.prototype.getlastpublish = function (callback) {
+  var that = this;
   request.get(BANGUMI_BASE_URL + '/api/torrent/my', function (err, response, body) {
     if (err) {
       callback(err);
       return;
     }
     if (body) {
-      var message = GetErrorMessage(body);
+      var message = that.GetErrorMessage(body);
       if (body && body.torrents) {
         var t = body.torrents[0];
         var lastone = {
