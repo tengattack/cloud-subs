@@ -17,6 +17,7 @@ function BTSiteBangumi(username, password) {
   this.setSite('bangumi');
   //this.m_vcode_url = '';
   this.m_options = {
+    category_tag_id: '549ef207fe682f7549f1ea90',
     inteam: 1,
     //teamsync: ''
   };
