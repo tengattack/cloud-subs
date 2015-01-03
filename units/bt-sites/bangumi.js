@@ -210,8 +210,8 @@ BTSiteBangumi.prototype.getlastpublish = function (callback) {
     }
     if (body) {
       var message = that.GetErrorMessage(body);
-      if (body && body.torrents) {
-        var t = body.torrents[0];
+      if (message && message.torrents) {
+        var t = message.torrents[0];
         var lastone = {
           url: BANGUMI_BASE_URL + '/#!/torrent/' + t._id,
           title: t.title
