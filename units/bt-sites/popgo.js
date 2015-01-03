@@ -11,14 +11,17 @@ var BTSiteBase = require('./base');
 
 var POPGO_BASE_URL = 'https://share.popgo.org';
 
-function BTSitePopgo(username, password) {
-  BTSiteBase.call(this, username, password);
+function BTSitePopgo(opts) {
+  BTSiteBase.call(this);
   this.setSite('popgo');
   //this.m_vcode_url = '';
   this.m_options = {
     pubasgroup: 1,
     submit: 1
   };
+  if (opts) {
+    this.m_options = _.extend(this.m_options, opts);
+  }
 }
 
 util.inherits(BTSitePopgo, BTSiteBase);

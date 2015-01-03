@@ -12,8 +12,8 @@ var BTSiteBase = require('./base');
 
 var BANGUMI_BASE_URL = 'https://bangumi.moe';
 
-function BTSiteBangumi(username, password) {
-  BTSiteBase.call(this, username, password);
+function BTSiteBangumi(opts) {
+  BTSiteBase.call(this);
   this.setSite('bangumi');
   //this.m_vcode_url = '';
   this.m_options = {
@@ -21,6 +21,9 @@ function BTSiteBangumi(username, password) {
     inteam: 1,
     //teamsync: ''
   };
+  if (opts) {
+    this.m_options = _.extend(this.m_options, opts);
+  }
 }
 
 util.inherits(BTSiteBangumi, BTSiteBase);

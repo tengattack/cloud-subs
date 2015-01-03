@@ -9,18 +9,19 @@ var BTSiteDmhy = require('./dmhy'),
 
 var BTSite = function (site, user_id) {
   var bts = null;
+  var opts = (btsites_config && btsites_config.options) ? btsites_config.options[site] : null;
   switch (site) {
     case 'dmhy':
-      bts = new BTSiteDmhy();
+      bts = new BTSiteDmhy(opts);
       break;
     case 'ktxp':
-      bts = new BTSiteKtxp();
+      bts = new BTSiteKtxp(opts);
       break;
     case 'popgo':
-      bts = new BTSitePopgo();
+      bts = new BTSitePopgo(opts);
       break;
     case 'bangumi':
-      bts = new BTSiteBangumi();
+      bts = new BTSiteBangumi(opts);
       break;
   }
   if (bts) bts.setUserId(user_id);

@@ -21,6 +21,17 @@ var configs = {
   'keys': {
     'SESSION_KEY': '',
   },
+  'bt_sites': {
+    'publish': ['dmhy', 'ktxp', 'popgo', 'bangumi'],
+    'options': {
+      'ktxp': {
+        'discuss_url': ''
+      },
+      'bangumi': {
+        //'teamsync': 1 //set for team sync
+      }
+    }
+  },
   'downloader': {
     'utorrent': {
       'PORT': 8063,

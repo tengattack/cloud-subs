@@ -11,8 +11,8 @@ var BTSiteBase = require('./base');
 
 var DMHY_BASE_URL = 'http://share.dmhy.org';
 
-function BTSiteDmhy(username, password) {
-  BTSiteBase.call(this, username, password);
+function BTSiteDmhy(opts) {
+  BTSiteBase.call(this);
   this.setSite('dmhy');
   this.m_vcode_url = '';
   this.m_options = {
@@ -24,6 +24,9 @@ function BTSiteDmhy(username, password) {
     disable_download_seed_file: 0,
     submit: '提交'
   };
+  if (opts) {
+    this.m_options = _.extend(this.m_options, opts);
+  }
 }
 
 util.inherits(BTSiteDmhy, BTSiteBase);

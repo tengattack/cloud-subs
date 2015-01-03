@@ -12,13 +12,16 @@ var BTSiteBase = require('./base');
 var MAX_TRY_TIMES = 10;
 var KTXP_BASE_URL = 'http://bt.ktxp.com';
 
-function BTSiteKtxp(username, password) {
-  BTSiteBase.call(this, username, password);
+function BTSiteKtxp(opts) {
+  BTSiteBase.call(this);
   this.setSite('ktxp');
   this.m_options = {
     discuss_url: '',  //http://mahou-shoujo.moe/
     team_resource: 0
   };
+  if (opts) {
+    this.m_options = _.extend(this.m_options, opts);
+  }
 }
 
 util.inherits(BTSiteKtxp, BTSiteBase);

@@ -5,7 +5,9 @@ var path = require('path');
 var _ = require('underscore');
 var EventProxy = require('eventproxy');
 
-var sys_config = require('./../../config').sys;
+var config = require('./../../config'),
+  sys_config = config.sys;
+  btsites_config = config.bt_sites;
 var Template = require('./../util/template');
 var Files = require('./../util/files');
 var Proxy = require('./../db/proxy'),
@@ -14,6 +16,8 @@ var Proxy = require('./../db/proxy'),
 
 var BTSite = require('./../bt-sites').BTSite;
 var D = require('./../downloader');
+
+var publishSites = btsites_config.publish;
 
 function taskFetchAll() {
   return function (callback) {
@@ -144,7 +148,7 @@ function btsitesUpload(user_id, task_id, title, intro, torrent_file, callback)
     TaskProxy.updateById(task_id, task, function() {});
   };
 
-  var arr_btsites = ['ktxp', 'dmhy', 'popgo', 'bangumi'];
+  var arr_btsites = publishSites;
   var ep = new EventProxy();
   var tbuf;
   //it will get from user upload
