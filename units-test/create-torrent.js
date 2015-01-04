@@ -1,6 +1,6 @@
 
-var sys_config = require('./config').sys;
-var BtDownloader = require('./units/downloader/bt');
+var sys_config = require('./../config').sys;
+var BtDownloader = require('./../units/downloader/bt');
 
 var datafile = sys_config.root_dir + 'test／stay.txt';
 var torrentfile = datafile + '.torrent';

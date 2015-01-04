@@ -1,6 +1,6 @@
 
-var sys_config = require('./config').sys;
-var BaiduDownloader = require('./units/downloader/baidu');
+var sys_config = require('./../config').sys;
+var BaiduDownloader = require('./../units/downloader/baidu');
 
 var bdd = new BaiduDownloader();
 //var url = 'http://pan.baidu.com/s/1hIzim';

@@ -1,11 +1,11 @@
 
 var fs = require('fs');
 
-var BtDownloader = require('./units/downloader/bt');
-var BaiduDownloader = require('./units/downloader/baidu');
+var BtDownloader = require('./../units/downloader/bt');
+var BaiduDownloader = require('./../units/downloader/baidu');
 
 //var tbud = new Buffer(1); // bad torrent for test
-var torrentfile = './units-test/a456e5f878c1f404b34ef9a9aa5a13ea60304ab6.torrent';
+var torrentfile = './a456e5f878c1f404b34ef9a9aa5a13ea60304ab6.torrent';
 fs.readFile(torrentfile, function (err, data) {
 
 var tbud = data;

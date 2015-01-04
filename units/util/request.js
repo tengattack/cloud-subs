@@ -57,6 +57,9 @@ exports.get = function (url, options, callback) {
     cb = callback;
   }
   if (options) {
+    if (options.rejectUnauthorized !== undefined) {
+      opts.rejectUnauthorized = options.rejectUnauthorized;
+    }
     if (options.buffer) {
       //the body is returned as a Buffer
       opts.encoding = null;
@@ -94,6 +97,9 @@ exports.post = function (url, form, options, callback) {
     cb = callback;
   }
   if (options) {
+    if (options.rejectUnauthorized !== undefined) {
+      opts.rejectUnauthorized = options.rejectUnauthorized;
+    }
     if (options.buffer) {
       //the body is returned as a Buffer
       opts.encoding = null;

@@ -3,13 +3,13 @@
 var fs = require('fs');
 var _ = require('underscore');
 
-var sys_config = require('./config').sys;
+var sys_config = require('./../config').sys;
 
-var Template = require('./units/util/template');
-var Database = require('./units/db');
+var Template = require('./../units/util/template');
+var Database = require('./../units/db');
 
-var BtDownloader = require('./units/downloader/bt');
-var BTSite = require('./units/bt-sites').BTSite;
+var BtDownloader = require('./../units/downloader/bt');
+var BTSite = require('./../units/bt-sites').BTSite;
 
 var db = new Database();
 

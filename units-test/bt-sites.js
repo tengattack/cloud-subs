@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-var Database = require('./units/db');
-var BTSite = require('./units/bt-sites').BTSite;
+var Database = require('./../units/db');
+var BTSite = require('./../units/bt-sites').BTSite;
 
 var db = new Database();
 
@@ -16,7 +16,7 @@ bts.login(function (err, islogin) {
     console.log(err);
   }
   if(!err && islogin) {
-    var tbuf = new Buffer(1); //fs.createReadStream('./units-test/a456e5f878c1f404b34ef9a9aa5a13ea60304ab6.torrent');
+    var tbuf = new Buffer(1); //fs.createReadStream('./a456e5f878c1f404b34ef9a9aa5a13ea60304ab6.torrent');
     bts.upload('【KNA字幕組】【Space☆Dandy 宇宙浪子/太空丹迪】[18][720P][BIG5][MP4]',
       '【KNA字幕組】【Space☆Dandy 宇宙浪子/太空丹迪】[18][720P][BIG5][MP4]', tbuf, function (err, succeed) {
       console.log(err, succeed);
