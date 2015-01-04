@@ -16,6 +16,7 @@ function BTSitePopgo(opts) {
   this.setSite('popgo');
   //this.m_vcode_url = '';
   this.m_options = {
+    titleselect: 1,
     pubasgroup: 1,
     submit: 1
   };
@@ -25,6 +26,23 @@ function BTSitePopgo(opts) {
 }
 
 util.inherits(BTSitePopgo, BTSiteBase);
+
+BTSitePopgo.prototype.setCategory = function (category) {
+  var cates = {
+    'donga': 1,
+    'comic': 2,
+    'game': 0,
+    'music': 4,
+    'movie': 1,
+    'collection': 12,
+    'dorama': 5,
+    'other': 0
+  };
+  var cate_id = cates[category];
+  if (cate_id || cate_id === 0) {
+    this.m_options.titleselect = cate_id;
+  }
+};
 
 BTSitePopgo.prototype.IsLogin = function (callback) {
   request.clearCookie(POPGO_BASE_URL);
@@ -148,7 +166,6 @@ BTSitePopgo.prototype.upload = function (title, intro, torrent_buf, callback) {
   //no need for vcode
   intro = this.TransformIntro(intro);
   var formdata = {
-    titleselect: 1,
     subject: title,
     message: intro,
     emule: ''

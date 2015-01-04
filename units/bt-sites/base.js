@@ -45,6 +45,10 @@ BTSiteBase.prototype.setUserId = function (user_id) {
   this.m_user_id = user_id;
 };
 
+BTSiteBase.prototype.setCategory = function (category) {
+  //donga, comic, game, music, movie, collection, dorama, other
+};
+
 BTSiteBase.prototype.saveCookie = function (str_cookie, callback) {
   //this.m_site = site;
   if (this.m_db_id) {

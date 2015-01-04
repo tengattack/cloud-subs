@@ -16,6 +16,7 @@ function BTSiteKtxp(opts) {
   BTSiteBase.call(this);
   this.setSite('ktxp');
   this.m_options = {
+    sort_id: 12,
     discuss_url: '',  //http://mahou-shoujo.moe/
     team_resource: 0
   };
@@ -25,6 +26,23 @@ function BTSiteKtxp(opts) {
 }
 
 util.inherits(BTSiteKtxp, BTSiteBase);
+
+BTSiteKtxp.prototype.setCategory = function (category) {
+  var cates = {
+    'donga': 12,
+    'comic': 3,
+    'game': 51,
+    'music': 4,
+    'movie': 39,
+    'collection': 28,
+    'dorama': 33,
+    'other': 33
+  };
+  var cate_id = cates[category];
+  if (cate_id) {
+    this.m_options.sort_id = cate_id;
+  }
+};
 
 BTSiteKtxp.prototype.IsLogin = function (callback) {
   request.clearCookie(KTXP_BASE_URL);
@@ -161,7 +179,6 @@ BTSiteKtxp.prototype.upload = function (title, intro, torrent_buf, callback) {
   var formdata = {
     op: 'upload',
     title: title,
-    sort_id: 12,
     intro: intro,
     emule_resource: '',
     vcode: null

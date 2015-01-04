@@ -8,7 +8,7 @@ var BTSiteDmhy = require('./dmhy'),
   BTSiteCamoe = require('./camoe'),
   BTSiteBangumi = require('./bangumi');
 
-var BTSite = function (site, user_id) {
+var BTSite = function (site, user_id, category) {
   var bts = null;
   var opts = (btsites_config && btsites_config.options) ? btsites_config.options[site] : null;
   switch (site) {
@@ -28,7 +28,14 @@ var BTSite = function (site, user_id) {
       bts = new BTSiteBangumi(opts);
       break;
   }
-  if (bts) bts.setUserId(user_id);
+  if (bts) {
+    if (category) {
+      bts.setCategory(category);
+    }
+    if (user_id) {
+      bts.setUserId(user_id);
+    }
+  }
   return bts;
 };
 

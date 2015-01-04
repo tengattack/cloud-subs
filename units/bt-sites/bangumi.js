@@ -28,6 +28,23 @@ function BTSiteBangumi(opts) {
 
 util.inherits(BTSiteBangumi, BTSiteBase);
 
+BTSiteBangumi.prototype.setCategory = function (category) {
+  var cates = {
+    'donga': '549ef207fe682f7549f1ea90',
+    'comic': '549eefebfe682f7549f1ea8c',
+    'game': '549ef015fe682f7549f1ea8d',
+    'music': '549eef6ffe682f7549f1ea8b',
+    'movie': '549cc9369310bc7d04cddf9f',
+    'collection': '54967e14ff43b99e284d0bf7',
+    'dorama': '549ff1db30bcfc225bf9e607',
+    'other': '549ef250fe682f7549f1ea91'
+  };
+  var cate_id = cates[category];
+  if (cate_id) {
+    this.m_options.sort = sort;
+  }
+};
+
 BTSiteBangumi.prototype.IsLogin = function (callback) {
   request.clearCookie(BANGUMI_BASE_URL);
   if (!this.m_cookie) {

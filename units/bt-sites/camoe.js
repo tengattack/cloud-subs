@@ -16,8 +16,8 @@ function BTSiteCamoe(opts) {
   this.setSite('camoe');
   //this.m_vcode_url = '';
   this.m_options = {
-    league: 0,
     sort: 1,
+    league: 0,
     button: "提交"
   };
   if (opts) {
@@ -26,6 +26,23 @@ function BTSiteCamoe(opts) {
 }
 
 util.inherits(BTSiteCamoe, BTSiteBase);
+
+BTSiteCamoe.prototype.setCategory = function (category) {
+  var cates = {
+    'donga': 1,
+    'comic': 5,
+    'game': 5,
+    'music': 4,
+    'movie': 3,
+    'collection': 1,
+    'dorama': 2,
+    'other': 5
+  };
+  var cate_id = cates[category];
+  if (cate_id) {
+    this.m_options.sort = sort;
+  }
+};
 
 BTSiteCamoe.prototype.IsLogin = function (callback) {
   request.clearCookie(CAMOE_BASE_URL);
