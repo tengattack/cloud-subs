@@ -84,6 +84,7 @@ BTSitePopgo.prototype.TransformIntro = function (intro) {
   intro = intro.replace(/><(p|h\d)/ig, ">\n<$1").replace(/<\/(p|h\d)></ig, "<\/$1>\n<");
   intro = intro.replace(/<h\d>([\s\S]*?)<\/h\d>/ig, "[size=3]$1[/size]");
   intro = intro.replace(/<p(\s(.*?))?>([\s\S]*?)<\/p>/ig, "$3");
+  intro = intro.replace(/<(strong|b)>([\s\S]*?)<\/\1>/ig, "[b]$2[/b]");
   intro = intro.replace(/<span(\s(.*?))?>([\s\S]*?)<\/span>/ig, "$3");
   intro = intro.replace(/<br(\s(.*?))?>/ig, "\n");
   intro = intro.replace(/<img\s.*?src="(.*?)".*?\/?>/ig, "[img]$1[/img]");
