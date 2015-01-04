@@ -19,7 +19,7 @@ templ.init(function (err, succeed) {
         console.log('login', err, islogin);
         return;
       }
-      fs.readFile('./[KNA][Girlfriend (kari)][01][720P][MP4][BIG5].mp4.torrent', function (err, data) {
+      fs.readFile('./units-test/[KNA][Girlfriend (kari)][01][720P][MP4][BIG5].mp4.torrent', function (err, data) {
         if (err) {
           console.log('readFile', err);
           return;
