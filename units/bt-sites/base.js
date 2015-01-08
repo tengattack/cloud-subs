@@ -1,5 +1,6 @@
 
 var EventProxy = require('eventproxy');
+var S = require('string');
 
 //db
 var BtSitesProxy = require('./../db/proxy/bt-sites');
