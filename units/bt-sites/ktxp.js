@@ -101,7 +101,7 @@ BTSiteKtxp.prototype.LoginForm = function (form, callback) {
                   || message.indexOf('登录验证失败') !== -1)) {
               //本地用户
               form.node = 0;
-              form.vcode = null;
+              form.vcode = '';
               that.LoginForm(form, callback);
               return;
             }
@@ -126,7 +126,7 @@ BTSiteKtxp.prototype.LoginEx = function (callback) {
     password: this.m_password,
     node: 1,
     cookietime: 315360000,
-    vcode: null
+    vcode: ''
   };
   this.LoginForm(form, callback);
 };
@@ -139,6 +139,10 @@ BTSiteKtxp.prototype.LoginSucceed = function (callback) {
 
 BTSiteKtxp.prototype.UploadEx = function (formdata, callback) {
   this.GetVcode('upload', function (err, word) {
+    if (err) {
+      callback(err);
+      return;
+    }
     formdata.vcode = word;
     request.post(KTXP_BASE_URL + '/user.php?o=upload',
       formdata, { multipart: true },
@@ -181,7 +185,7 @@ BTSiteKtxp.prototype.upload = function (title, intro, torrent_buf, callback) {
     title: title,
     intro: intro,
     emule_resource: '',
-    vcode: null
+    vcode: ''
   };
   formdata = _.extend(formdata, this.m_options);
   formdata.__object = [{ 
