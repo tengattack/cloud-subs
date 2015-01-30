@@ -31,4 +31,3 @@ templ.init(function (err, succeed) {
     });
   });
 });
-

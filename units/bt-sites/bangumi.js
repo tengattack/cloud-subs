@@ -18,7 +18,6 @@ function BTSiteBangumi(opts) {
   //this.m_vcode_url = '';
   this.m_options = {
     category_tag_id: '549ef207fe682f7549f1ea90',
-    inteam: 1,
     //teamsync: ''
   };
   if (opts) {
@@ -34,6 +33,7 @@ BTSiteBangumi.prototype.setCategory = function (category) {
     'comic': '549eefebfe682f7549f1ea8c',
     'game': '549ef015fe682f7549f1ea8d',
     'music': '549eef6ffe682f7549f1ea8b',
+    'raws': '549ef207fe682f7549f1ea90',   //same with donga
     'movie': '549cc9369310bc7d04cddf9f',
     'collection': '54967e14ff43b99e284d0bf7',
     'dorama': '549ff1db30bcfc225bf9e607',
@@ -115,7 +115,7 @@ BTSiteBangumi.prototype.LoginSucceed = function (callback) {
   callback(null, true);
 };
 
-BTSiteBangumi.prototype.GetTagSuggest = function (title, callback) {
+BTSiteBangumi.prototype.GetTagSuggest = function (title, team_id, callback) {
   var that = this;
   var ep = new EventProxy();
   ep.all(['tags', 'torrent'], function (tags, torrent) {
@@ -150,8 +150,12 @@ BTSiteBangumi.prototype.GetTagSuggest = function (title, callback) {
       }
   });
 
+  var tsugq = { title: title };
+  if (team_id) {
+    tsugq['team_id'] = team_id;
+  }
   request.post(BANGUMI_BASE_URL + '/api/torrent/suggest',
-    {title: title, inteam: 1}, {multipart: true}, function (err, response, body) {
+    tsugq, {multipart: true}, function (err, response, body) {
       if (err) {
         return ep.emit('error', err);
       }
@@ -162,6 +166,26 @@ BTSiteBangumi.prototype.GetTagSuggest = function (title, callback) {
         ep.emit('torrent', {});
       }
   });
+};
+
+BTSiteBangumi.prototype.GetMyTeams = function (callback) {
+  var that = this;
+  request.get(BANGUMI_BASE_URL + '/api/team/myteam', {multipart: true},
+    function (err, response, body) {
+      if (err) {
+        return callback(err);
+      }
+      var team_ids = [];
+      var teams = that.GetErrorMessage(body);
+      if (teams && teams instanceof Array) {
+        teams.forEach(function (t) {
+          if (t._id) {
+            team_ids.push(t._id);
+          }
+        });
+      }
+      callback(null, team_ids);
+    });
 };
 
 BTSiteBangumi.prototype.UploadEx = function (formdata, callback) {
@@ -197,7 +221,7 @@ BTSiteBangumi.prototype.upload = function (title, intro, torrent_buf, callback) 
     introduction: intro,
   };
   formdata = _.extend(formdata, this.m_options);
-  formdata.__object = [{ 
+  formdata.__object = [{
     type: 'buffer',
     name: 'file',
     buffer: torrent_buf,
@@ -206,17 +230,27 @@ BTSiteBangumi.prototype.upload = function (title, intro, torrent_buf, callback) 
   }}];
 
   var that = this;
-  this.GetTagSuggest(title, function (err, tag_ids) {
+  this.GetMyTeams(function (err, team_ids) {
     if (err) {
       return callback(err);
     }
-    formdata.tag_ids = tag_ids.join();
-    that.UploadEx(formdata, function (err, succeed) {
+    var team_id = null;
+    if (team_ids && team_ids.length > 0) {
+      team_id = team_ids[0];
+      formdata.team_id = team_id;
+    }
+    that.GetTagSuggest(title, team_id, function (err, tag_ids) {
       if (err) {
-        callback(err);
-      } else {
-        callback(null, succeed);
+        return callback(err);
       }
+      formdata.tag_ids = tag_ids.join();
+      that.UploadEx(formdata, function (err, succeed) {
+        if (err) {
+          callback(err);
+        } else {
+          callback(null, succeed);
+        }
+      });
     });
   });
 };

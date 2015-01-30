@@ -35,7 +35,7 @@ exports.setCookie = function (str_cookie, url) {
 };
 
 exports.getCookie = function (url) {
-  return j.getCookieStringSync(url);
+  return j.getCookieString(url);
 };
 
 exports.get = function (url, options, callback) {
