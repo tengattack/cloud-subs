@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A tools for Automated Encoding Video and Publish Torrents.
+A tool for Automated Encoding Video and Publish Torrents.
 
 一个自动化视频编码与发布工具
 
