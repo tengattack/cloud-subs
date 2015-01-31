@@ -442,7 +442,7 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
 
 .run(['$rootScope', '$location', 'User', function ($rootScope, $location, User) {
   User.info(function (info) {
-    if (!info.islogin) {
+    if (!info || !info.islogin) {
       $location.path('/user/login');
     }
   });
