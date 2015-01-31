@@ -228,18 +228,13 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
     };
 }])
 
-.controller('MainCtrl', ['$scope', '$routeParams', '$location', 'User',
-  function($scope, $routeParams, $location, User) {
+.controller('MainCtrl', ['$scope', '$routeParams',
+  function($scope, $routeParams) {
     $scope.projects = [
       {site: '#/', name: 'main', description: 'Index Page', $id: 1},
       {site: '#/user/', name: 'user', description: 'User Page', $id: 2},
       {site: '#/task/', name: 'task', description: 'Task Page', $id: 3},
     ];
-    User.info(function (info) {
-      if (!info.islogin) {
-        $location.path('/user/login');
-      }
-    });
 }])
 
 .controller('TaskCtrl', ['$scope', '$routeParams', '$location', 'Tasks', 'Bangumis',
@@ -304,7 +299,7 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
 
 .controller('TaskViewCtrl', ['$scope', '$interval', '$routeParams', 'Tasks', 'Download', 'Subtitle',
   function($scope, $interval, $routeParams, Tasks, Download, Subtitle) {
-  
+
     var tar_dl = undefined, tar_task = undefined;
     var set_task = function (task) {
       if (task.opts) {
@@ -443,6 +438,14 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
         }
       });
     };
+}])
+
+.run(['$rootScope', '$location', 'User', function ($rootScope, $location, User) {
+  User.info(function (info) {
+    if (!info.islogin) {
+      $location.path('/user/login');
+    }
+  });
 }])
 
 ;

@@ -13,11 +13,13 @@ function BTSiteBase() {
   this.m_cookie = '';
   this.m_db_id = null;
   this.m_user_id = null;
+  this.dirty = false;
 }
 
 BTSiteBase.TransformIntro = function (intro) {
-  intro = intro.replace(/<(\w+)(\s([^>]*?))?><\/\1>/ig, ''); //remove empty node
-  intro = intro.replace(/><(p|h\d)/ig, ">\n<$1").replace(/<\/(p|h\d)></ig, "<\/$1>\n<");
+  intro = intro.replace(/<(\w+)(\s([^>]*?))?>( *?)<\/\1>/ig, ''); //remove empty node
+  intro = intro.replace(/<\/(tr|p|h\d)>( *?)</ig, "<\/$1>\n<");
+
   intro = intro.replace(/<h\d(\s([^>]*?))?>([\s\S]*?)<\/h\d>/ig, "[size=3]$3[/size]");
   intro = intro.replace(/<p(\s(.*?))?>([\s\S]*?)<\/p>/ig, "$3");
   intro = intro.replace(/<(strong|b)>([\s\S]*?)<\/\1>/ig, "[b]$2[/b]");
@@ -25,6 +27,9 @@ BTSiteBase.TransformIntro = function (intro) {
   intro = intro.replace(/<br(\s(.*?))?>/ig, "\n");
   intro = intro.replace(/<img\s.*?src="(.*?)".*?\/?>/ig, "[img]$1[/img]");
   intro = intro.replace(/<a\s.*?href="(.*?)".*?>(.*?)<\/a>/ig, "[url=$1]$2[/url]");
+
+  intro = intro.replace(/<[^>]*>/g, "");
+
   intro = S(intro).decodeHTMLEntities().s;
   return intro;
 };
@@ -61,11 +66,12 @@ BTSiteBase.prototype.setUserId = function (user_id) {
 };
 
 BTSiteBase.prototype.setCategory = function (category) {
-  //donga, comic, game, music, movie, collection, dorama, other
+  //donga, comic, game, music, raws, movie, collection, dorama, other
 };
 
 BTSiteBase.prototype.saveCookie = function (str_cookie, callback) {
   //this.m_site = site;
+  this.dirty = true;
   if (this.m_db_id) {
     BtSitesProxy.updateCookieById(this.m_db_id, str_cookie, callback);
   } else {

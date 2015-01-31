@@ -4,7 +4,6 @@ var path = require('path');
 
 var logger = require('koa-logger');
 var route = require('koa-route');
-var json = require('koa-json');
 var session = require('koa-session');
 //var staticCache = require('koa-static-cache');
 var parse = require('co-body')
@@ -35,9 +34,9 @@ app.keys = [key_config.SESSION_KEY];
 
 // middleware
 app.use(logger());
-app.use(json({ pretty: false }));
+//app.use(json({ pretty: false }));
 
-app.use(session({maxAge: COOKIE_MAXAGE}));
+app.use(session({maxAge: COOKIE_MAXAGE}, app));
 
 app.use(function *(next) {
   var have_files = false;
@@ -71,8 +70,12 @@ app.use(function *(next) {
     this.request.body = body;
     this.request.files = files;
   } else if ('POST' == this.method) {
-    var body = yield parse.json(this); //, { limit: '1kb' }
-    this.request.body = body;
+    try {
+      var body = yield parse.json(this); //, { limit: '1kb' }
+      this.request.body = body;
+    } catch (e) {
+      this.request.body = {};
+    }
   }
 
   yield next;

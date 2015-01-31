@@ -16,7 +16,9 @@ var configs = {
     'template_dir': templ_dir,
   },
   'web': {
-    'ADMIN_USERNAME': 'kna'
+    'ADMIN_USERNAME': 'kna',
+    'address': '127.0.0.1',
+    'port': 3000
   },
   'keys': {
     'SESSION_KEY': '',

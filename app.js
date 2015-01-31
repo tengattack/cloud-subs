@@ -15,6 +15,8 @@ if (node_env == 'production') {
  * Module dependencies.
  */
 
+var config = require('./config');
+
 var koa = require('koa');
 var app = module.exports = koa();
 
@@ -32,6 +34,11 @@ route.route(app);
  */
 
 // listen
-var listen_port = 3000;
-app.listen(listen_port);
-console.log('listening on port ' + listen_port.toString());
+var server = app.listen(config['web'].port || 3000,
+  config['web'].address || '::',
+  function () {
+    console.log('Server listening on ' +
+    server.address().address +
+    ':' + server.address().port
+  );
+});
