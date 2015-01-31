@@ -1,6 +1,6 @@
 {
   "name": "cloud-subs",
-  "version": "0.0.1",
+  "version": "0.6.1",
   "scripts": {
     "start": "node --harmony app"
   },
@@ -10,8 +10,6 @@
     "koa-logger": "*",
     "koa-route": "*",
     "koa-session": "*",
-    "koa-session-mongo": "*",
-    "koa-static-cache": "*",
     "co-body": "*",
     "co-busboy": "*",
     "tough-cookie": "*",
