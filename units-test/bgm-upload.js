@@ -14,6 +14,8 @@ templ.init(function (err, succeed) {
     console.log('IsLogin', err, islogin);
   });*/
   bts.init(function () {
+    bts.m_username = 'teng';
+    bts.m_password = '123456';
     bts.login(function (err, islogin) {
       if (err) {
         console.log('login', err, islogin);

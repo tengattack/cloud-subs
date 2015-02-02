@@ -29,7 +29,7 @@ exports.setCookie = function (str_cookie, url) {
     sub_cookie = sub_cookie.trim();
     if (sub_cookie) {
       cookie = request.cookie(sub_cookie);
-      j.setCookieSync(cookie, url);
+      j.setCookie(cookie, url);
     }
   });
 };
