@@ -34,7 +34,9 @@ function fontNew(font_file) {
               break;
             }
           }
-          if (!found) {
+          if (found) {
+            return callback(new Error('font already installed'));
+          } else {
             var sname = font.name.toLowerCase().replace(/ /g, '-') + f.extname;
             var spath = path.join(sys_config.public_dir, 'data/fonts', sname);
             fs.rename(f.path, spath, function (err) {
