@@ -9,8 +9,8 @@ var Files = require('./../util/files'),
 
 function fontList() {
   return function (callback) {
-    //Fonts.list(callback);
-    callback(null, [ { name: 'SimSun', type: 'TrueType' } ]);
+    Fonts.list(callback);
+    //callback(null, [ { name: 'SimSun', type: 'TrueType' } ]);
   };
 }
 
