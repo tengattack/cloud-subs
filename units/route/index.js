@@ -104,7 +104,7 @@ app.use(function *(next) {
   try {
     yield next;
   } catch (err) {
-    this.status = 500;
+    //this.status = 500;
     this.body = {
       errno: 500,
       message: err.toString()
