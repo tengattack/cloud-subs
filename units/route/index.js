@@ -123,6 +123,7 @@ app.use(route.all('/api/bangumi/:action', Interface.bangumi));
 app.use(route.all('/api/task/:action', Interface.task));
 app.use(route.all('/api/download/:action', Interface.download));
 app.use(route.all('/api/subtitle/:action', Interface.subtitle));
+app.use(route.all('/api/font/:action', Interface.font));
 
 }
 

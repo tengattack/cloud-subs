@@ -132,6 +132,14 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
     });
 }])
 
+.factory('Fonts', ['$resource', function($resource) {
+  return $resource('/api/font/:action', null,
+  {
+    'upload': { method:'POST', params: { action: 'upload' } },
+    'query': { method:'GET', isArray: true, params: { action: 'query' } }
+  });
+}])
+
 .config(function($routeProvider) {
   $routeProvider
     .when('/', {
@@ -161,6 +169,10 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
     .when('/task/publish', {
       controller:'TaskPublishCtrl',
       templateUrl:'templ/taskpublish.html'
+    })
+    .when('/font', {
+      controller:'FontManagerCtrl',
+      templateUrl:'templ/font.html'
     })
     ;
 })
@@ -233,7 +245,8 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
     $scope.projects = [
       {site: '#/', name: 'main', description: 'Index Page', $id: 1},
       {site: '#/user/', name: 'user', description: 'User Page', $id: 2},
-      {site: '#/task/', name: 'task', description: 'Task Page', $id: 3},
+      {site: '#/font/', name: 'font', description: 'Font Page', $id: 3},
+      {site: '#/task/', name: 'task', description: 'Task Page', $id: 4},
     ];
 }])
 
@@ -438,6 +451,28 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
         }
       });
     };
+}])
+
+.controller('FontManagerCtrl', ['$scope', 'Fonts',
+  function($scope, Fonts) {
+    $scope.fonts = [];
+    $scope.uploadNewFont = function () {
+      if (!$scope.font_file) {
+        return;
+      }
+      Fonts.upload({ font_file: $scope.font_file }, function (ft) {
+        if (ft) {
+          if (!ft.errno) {
+            $scope.fonts.unshift(ft.font);
+          } else if (ft.message) {
+            alert(ft.message);
+          }
+        }
+      });
+    };
+    Fonts.query(function (fonts) {
+      $scope.fonts = fonts;
+    });
 }])
 
 .run(['$rootScope', '$location', 'User', function ($rootScope, $location, User) {

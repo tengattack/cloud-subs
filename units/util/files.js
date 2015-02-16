@@ -25,6 +25,10 @@ function Files(type, file) {
     case '.ass':
       this.type = 'subtitle';
       break;
+    case '.ttf':
+    case '.otf':
+      this.type = 'font';
+      break;
     default:
       this._valid = false;
       break;
@@ -51,7 +55,7 @@ Files.prototype.save = function(callback) {
 
   var ep = new EventProxy();
   ep.all(['mkdir', 'stat'], function (md, stat) {
-    
+
     savepath = savepath + '/' + that.savename + that.extname;
     var filesize = stat['size'];
     var newpath = path.join(sys_config.public_dir, savepath);

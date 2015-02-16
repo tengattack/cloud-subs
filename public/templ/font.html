@@ -1,0 +1,15 @@
+<h3>New Font</h3>
+<div id="newfont">
+  <form name="newfontForm" enctype="multipart/form-data" ng-submit="uploadNewFont()">
+    <p><b>Font File</b>: <input type="file" fileread="font_file" required /></p>
+    <button type="submit">Upload</button>
+  </form>
+</div>
+<hr>
+<h3>Font List</h3>
+<div id="fontlist">
+  <p ng-repeat="font in fonts">
+    {{ font.name }}
+    <span class="fonttype" ng-show="font.type"><small>({{ font.type }})</small></span>
+  </p>
+</div>
