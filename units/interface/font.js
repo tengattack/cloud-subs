@@ -65,6 +65,10 @@ function *font_route(action) {
       this.body = yield fontList();
       break;
     case 'upload':
+      if (!this.session || !this.session.user) {
+        this.body = {errno: 3};
+        return;
+      }
       if (this.request.files && this.request.files.font_file) {
         var font = yield fontNew(this.request.files.font_file);
         this.body = font ? {errno: 0, font: font} : {errno: 3};
