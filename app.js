@@ -8,7 +8,11 @@ if (!node_env) {
 console.log("NODE_ENV: " + node_env);
 if (node_env == 'production') {
   /* Do this on Windows */
-  require('hideconsole');
+  try {
+    require('hideconsole');
+  } catch (e) {
+    console.error(e.message);
+  }
 }
 
 /**

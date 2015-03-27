@@ -267,7 +267,7 @@ BTSiteBangumi.prototype.getlastpublish = function (callback) {
       if (message && message.torrents) {
         var t = message.torrents[0];
         var lastone = {
-          url: BANGUMI_BASE_URL + '/#!/torrent/' + t._id,
+          url: BANGUMI_BASE_URL + '/torrent/' + t._id,
           title: t.title
         };
         callback(null, lastone);

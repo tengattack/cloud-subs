@@ -160,7 +160,7 @@ function btsitesUpload(user_id, task_id, title, intro, torrent_file, callback)
     updateTaskStatus('published', {bt_sites: bt_sites});
   });
   ep.fail(function (err) {
-    console.log(err);
+    console.error(err);
     if (callback) callback(err);
     updateTaskStatus('error');
   });
@@ -171,18 +171,18 @@ function btsitesUpload(user_id, task_id, title, intro, torrent_file, callback)
       var bts = BTSite(btsname, user_id);
       bts.init(function (err) {
         if (err) {
-          console.log(err);
+          console.error(err);
           ep.emit(btsname, false);
           return;
         }
         bts.login(function (err, islogin) {
           if (err) {
-            console.log(err);
+            console.error(err);
           }
           if(!err && islogin) {
             bts.upload(title, intro, tbuf, function (err, succeed) {
               if (err) {
-                console.log(err);
+                console.error(err);
               }
               if (succeed) {
                 bts.getlastpublish(function (err, last) {
