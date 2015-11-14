@@ -45,6 +45,14 @@ Template.list = function(callback) {
   });
 };
 
+Template.stop = function(pid, callback) {
+  var cmd = 'taskkill /f /t /pid ' + pid;
+  command.exec(cmd, null, function (err, stdout, stderr) {
+    // if stdout.indexOf('SUCCESS')
+    callback();
+  });
+};
+
 Template.prototype.ReadFile = function(path, callback) {
   fs.readFile(path, {encoding: 'utf8'}, callback);
 };
@@ -171,10 +179,13 @@ Template.prototype.run = function (callback, fn_status, fn_step) {
   }
   var that = this;
   //remove outfile
-  fs.unlink(this.outfile, function () {
+  if (this.outfile && fs.existsSync(this.outfile)) {
+    fs.unlinkSync(this.outfile);
+  }
+  //fs.unlink(this.outfile, function () {
     //code page 65001 -> UTF-8
     var cmd = 'cmd /c call "' + that.cmdpath + '"';
-    command.exec(cmd,
+    var child = command.exec(cmd,
       fn_status,
       function (err, stdout, stderr) {
         if (err) {
@@ -190,7 +201,8 @@ Template.prototype.run = function (callback, fn_status, fn_step) {
           });
         }
     });
-  });
+    return child.pid;
+  //});
 };
 
 Template.prototype.init = function(opts, callback) {

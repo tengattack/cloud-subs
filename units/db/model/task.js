@@ -24,6 +24,10 @@ var TaskSchema = new Schema({
   status: {
     type: String
   },
+  pid: {
+    // process id
+    type: Number
+  },
   logs: {
     type: String
   },

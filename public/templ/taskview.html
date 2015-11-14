@@ -53,11 +53,12 @@
   <p>Publish after finish: <input type="checkbox" ng-model="autopublish" /></p>
   <p ng-repeat="(opt_name, opt_value) in task.opts"><b>{{opt_name}}</b>: <input type="text" ng-model="task.opts[opt_name]" /></p>
   <button ng-click="startEncode()" ng-disabled="working">{{task.status == 'encoding' ? 'Encoding' : 'Encode'}}</button>
+  <button ng-click="stopEncode()" ng-disabled="task.status !== 'encoding'">Stop</button>
 </div>
 <hr>
 <div id="publish">
   <h4>Bt Sites Publish</h4>
-  <p>Publish on DMHY, KTXP and POPGO</p>
+  <p>Publish on <a href="https://bangumi.moe" target="_blank">Bangumi.moe</a>, DMHY, KTXP and POPGO</p>
   <div ng-if="task.bt_sites">
     <p ng-repeat="(site_name, succeed) in task.bt_sites"><b>{{site_name}}</b>: {{succeed}}</p>
   </div>

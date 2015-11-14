@@ -100,6 +100,7 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
       'delete': { method:'POST', params: { action: 'delete' } },
       'query': { method:'GET', isArray: true, params: { action: 'query' } },
       'encode': { method:'POST', params: { action: 'encode' } },
+      'stop': { method:'POST', params: { action: 'stop' } },
       'template': { method:'GET', params: { action: 'template' } },
       'publish': { method:'GET', params: { action: 'publish' } },
       'publishnew': { method:'POST', params: { action: 'publishnew' } },
@@ -441,6 +442,14 @@ angular.module('CloudSubsApp', ['ngRoute', 'ngResource'])
             set_task(task);
             autoRefreshTaskStatus();
           }
+      });
+    };
+    $scope.stopEncode = function () {
+      var opts = $scope.task.opts;
+      Tasks.stop({
+          id: $scope.task._id
+        }, function (task) {
+          autoRefreshTaskStatus();
       });
     };
     $scope.publish = function () {

@@ -41,6 +41,33 @@ function taskGet(id) {
   };
 }
 
+function taskStopEncoding(user_id, id) {
+  var task_id = id;
+  return function (callback) {
+    TaskProxy.get(task_id, function (err, task) {
+      if (err) {
+        callback(err);
+        return;
+      }
+      if (!task) {
+        callback('task not found');
+        return;
+      }
+      if (task.status != 'encoding') {
+        callback('task aren\'t encoding now');
+        return;
+      }
+      if (task && task.pid) {
+        Template.stop(task.pid, function (err) {
+          callback(null);
+        });
+      } else {
+        callback('task unready');
+      }
+    });
+  };
+}
+
 function taskEncode(user_id, id, autopublish, opts) {
   var task_id = id;
   return function (callback) {
@@ -89,7 +116,7 @@ function taskEncode(user_id, id, autopublish, opts) {
             if (!opts) opts = {};
             opts._autopublish = autopublish;
             updateTaskStatus('ready', {opts: opts});
-            
+
             var asspath = path.join(sys_config.public_dir, st.path);
             var templ = new Template(task.bangumi, task.episode, dl.filename, asspath);
             templ.init(opts, function (err, succeed) {
@@ -98,10 +125,8 @@ function taskEncode(user_id, id, autopublish, opts) {
                 callback(err);
                 return;
               }
-              updateTaskStatus('encoding', {outfile: ''});
-              callback(null, task);
 
-              templ.run(function (err, outfile) {
+              var pid = templ.run(function (err, outfile) {
                 if (err) {
                   updateTaskStatus('error');
                   return;
@@ -125,6 +150,9 @@ function taskEncode(user_id, id, autopublish, opts) {
                 //checking
                 updateTaskStatus(step);
               });
+
+              updateTaskStatus('encoding', {outfile: '', pid: pid});
+              callback(null, task);
             });
           });
         });
@@ -334,6 +362,7 @@ function *task_route(action) {
       break;
     case 'create':
     case 'encode':
+    case 'stop':
       var body = this.request.body;
       if (body) {
         var task;
@@ -346,6 +375,8 @@ function *task_route(action) {
           }
         } else if (action == 'encode') {
           task = yield taskEncode(user._id, body.id, body.autopublish, body.opts);
+        } else if (action == 'stop') {
+          task = yield taskStopEncoding(user._id, body.id);
         }
         this.body = task ? task : {errno: 3};
       } else {
