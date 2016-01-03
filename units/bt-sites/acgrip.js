@@ -31,18 +31,18 @@ util.inherits(BTSiteAcgrip, BTSiteBase);
 BTSiteAcgrip.prototype.setCategory = function (category) {
   var cates = {
     'donga': 1,
-    'comic': 5,
-    'game': 5,
+    'comic': 9,
+    'game': 9,
     'music': 4,
     'raws': 1,
-    'movie': 3,
+    'movie': 1,
     'collection': 1,
     'dorama': 2,
-    'other': 5
+    'other': 9
   };
   var cate_id = cates[category];
   if (cate_id) {
-    this.m_options.sort = cate_id;
+    this.m_options['post[category_id]'] = cate_id;
   }
 };
 
