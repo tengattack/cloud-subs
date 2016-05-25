@@ -59,11 +59,18 @@ BaiduDownloader.prototype._verify = function (infos, code, callback) {
     + '&channel=chunlei&clienttype=0&web=1';
   var formdata = {
     pwd: code,
-    vcode: ''
+    vcode: '',
+    vcode_str: ''
   };
-  request.post(url, formdata, {json: true}, function (err, response, body) {
+  request.post(url, formdata, function (err, response, body) {
     if (err) {
       callback('密码验证获取失败');
+      return;
+    }
+    try {
+      body = JSON.parse(body);
+    } catch (e) {
+      callback('failed to parse response');
       return;
     }
     if (body.errno == 0) {
@@ -79,7 +86,7 @@ BaiduDownloader.prototype._verify = function (infos, code, callback) {
     } else if (body.errno == -20) {
       //需要验证码
       callback('verify need vcode');
-    } else if (body.errno == -12) {
+    } else if (body.errno == -12 || body.errno == -9) {
       callback('密码错误');
     } else {
       callback('未知错误');
@@ -166,7 +173,11 @@ BaiduDownloader.prototype.dl = function (url, opts, callback, fn_process, fn_fin
       callback(err);
       return;
     }
-    if (response.statusCode === 302) {
+    if (response.statusCode === 403 && !opts.bypass403) {
+      opts.bypass403 = true;
+      that.dl(url, opts, callback, fn_process, fn_finish);
+      return;
+    } else if (response.statusCode === 302) {
       if (opts.redirect_times && opts.redirect_times > 5) {
         callback('too many redirect');
       } else {
