@@ -24,7 +24,7 @@ exports.writeFile = function (outfile, cmd, options, callback) {
 
 exports.exec = function (cmd, fn_stdout, callback) {
   //1M buffer
-  var c = exec(cmd, {encoding: 'binary', maxBuffer: 1024 * 1024}, function (err, stdout, stderr) {
+  var c = exec(cmd, {encoding: 'binary', maxBuffer: 10 * 1024 * 1024}, function (err, stdout, stderr) {
     if (err) {
       err.message = iconv.decode(new Buffer(err.message, 'binary'), ENV_CHARSET);
     }
